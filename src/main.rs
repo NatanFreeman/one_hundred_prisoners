@@ -1,28 +1,28 @@
+use colored::Colorize;
+use rand::seq::SliceRandom;
+use rand::thread_rng;
+use std::fmt;
 use std::fmt::Debug;
 
-use colored::Colorize;
-use rand::Rng;
-use std::fmt;
-
 ///This struct is used to allow the `boxes` to be printed neatly
-struct Boxes {
-    boxes: [(u8, u8); 100],
+struct Pairs {
+    boxes: Vec<(u8, u8)>,
 }
-///Generates 100 numbers representing the boxes
-fn generate_boxes() -> Boxes {
-    let mut boxes = [(0, 0); 100];
+///Generates 100 sets of two `u8` with no duplicates
+fn generate_boxes() -> Pairs {
+    let mut pairs: (Vec<u8>, Vec<u8>) = ((0..100_u8).collect(), (0..100_u8).collect());
 
-    let mut rng = rand::thread_rng();
-    for i in 0..100 {
-        boxes[i].0 = rng.gen_range(0..100);
+    pairs.0.shuffle(&mut thread_rng());
+    pairs.1.shuffle(&mut thread_rng());
+
+    let mut res = Vec::new();
+    for (index, value) in pairs.0.iter().enumerate() {
+        res.push((*value, pairs.1[index]));
     }
-    for i in 0..100 {
-        boxes[i].1 = boxes[rng.gen_range(0..100)].0;
-    }
-    Boxes { boxes }
+    Pairs { boxes: res }
 }
 
-impl Debug for Boxes {
+impl Debug for Pairs {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         let mut print = String::new();
         for y in 0..10 {
@@ -42,7 +42,7 @@ impl Debug for Boxes {
 
 fn main() {
     loop {
-        println!("{}", format!("Boxes:\n{:?}", generate_boxes()).bold());
         println!("\x1B[2J\x1B[1;1H");
+        println!("{}", format!("Boxes:\n{:?}", generate_boxes()).bold());
     }
 }
