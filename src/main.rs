@@ -4,22 +4,29 @@ use rand::thread_rng;
 use std::fmt;
 use std::fmt::Debug;
 
+mod tests;
+
 ///This struct is used to allow the `boxes` to be printed neatly
-struct Pairs {
+pub struct Pairs {
     boxes: Vec<(u8, u8)>,
 }
-///Generates 100 sets of two `u8` with no duplicates
-fn generate_boxes() -> Pairs {
+
+impl Pairs {
+    pub fn from_tuple(tuple: (Vec<u8>, Vec<u8>)) -> Self {
+        let mut res = Vec::new();
+        for (index, value) in tuple.0.iter().enumerate() {
+            res.push((*value, tuple.1[index]));
+        }
+        Self { boxes: res }
+    }
+}
+///Generates a couple a `Vec`s with shuffled unique values
+pub fn generate_numbers() -> (Vec<u8>, Vec<u8>) {
     let mut pairs: (Vec<u8>, Vec<u8>) = ((0..100_u8).collect(), (0..100_u8).collect());
 
     pairs.0.shuffle(&mut thread_rng());
     pairs.1.shuffle(&mut thread_rng());
-
-    let mut res = Vec::new();
-    for (index, value) in pairs.0.iter().enumerate() {
-        res.push((*value, pairs.1[index]));
-    }
-    Pairs { boxes: res }
+    pairs
 }
 
 impl Debug for Pairs {
@@ -43,6 +50,7 @@ impl Debug for Pairs {
 fn main() {
     loop {
         println!("\x1B[2J\x1B[1;1H");
-        println!("{}", format!("Boxes:\n{:?}", generate_boxes()).bold());
+        let boxes = Pairs::from_tuple(generate_numbers());
+        println!("{}", format!("Boxes:\n{:?}", boxes).bold());
     }
 }
