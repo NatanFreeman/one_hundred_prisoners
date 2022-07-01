@@ -2,8 +2,14 @@
 name = "one_hundred_prisoners"
 version = "0.1.0"
 edition = "2021"
-
-# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+authors=["Natan"]
+keywords=["100", "prisoners", "simualtion", "math", "problem"]
+categories = ["Algorithms", "Mathematics", "Simulation"]
+readme = "README.md"
+repository = "https://github.com/NatanFreeman/one_hundred_prisoners"
+license = "Apache-2.0"
+license-file = "LICENCE"
+description="A simulation of the 100 prisoners problem with the proposed solution written in Rust."
 
 [dependencies]
 rand="0.8.5"
