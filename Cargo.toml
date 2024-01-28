@@ -7,13 +7,13 @@ keywords=["100", "prisoners", "simualtion", "math", "problem"]
 categories = ["Algorithms", "Mathematics", "Simulation"]
 readme = "README.md"
 repository = "https://github.com/NatanFreeman/one_hundred_prisoners"
-license = "Apache-2.0"
+license = "apache-2.0"
 license-file = "LICENCE"
 description="A simulation of the 100 prisoners problem with the proposed solution written in Rust."
 
 [dependencies]
 rand="0.8.5"
-colored = "2.0.0"
+colored = "2.1.0"
 
 log = "0.4.17"
-simplelog = { version = "0.12.0", features = ["paris"] }
+simplelog = { version = "0.12.1", features = ["paris"] }
